@@ -1,0 +1,131 @@
+%
+% Commands for presenting natural deduction proofs similar to
+% way found in COMP1120 at UoM
+%
+% Joss Moffatt 2021
+%
+
+
+\usepackage{amsmath,environ}
+
+%
+%  Functions relevant to Natural Deduction Systems
+%
+
+%
+%  Base Function used as a base rule for rules with no premises
+%
+\newcommand{\baseRuleWithNoPremises}[3]{
+    \incLineCtrAndShow)&& #1 &\vdash #2 && #3\\
+}
+
+%
+%  Base Function for rules with premises
+%
+\newcommand{\baseRuleWithPremises}[4]{
+    \incLineCtrAndShow)&& #1 &\vdash #2 && #3,\;#4\\
+}
+
+%
+%  Wrapper function for rules that are classed as introduction rules
+%
+\newcommand{\introductionRule}[4]{
+    \baseRuleWithPremises{#1}{#2}{#3}{I_{#4}}
+}
+%
+%  Wrapper function for rules that are classed as elimination rules
+%
+\newcommand{\eliminationRule}[4]{
+    \baseRuleWithPremises{#1}{#2}{#3}{E_{#4}}
+}
+%
+%  Wrapper function for the axiom rule
+%
+\newcommand{\axiom}[2]{
+    \baseRuleWithNoPremises{#1}{#2}{\text{Axiom}}
+}
+%
+%  Wrapper function for the weakening rule
+%
+\newcommand{\weakening}[3]{
+    \baseRuleWithPremises{#1}{#2}{#3}{\text{Weakening}}
+}
+%
+%  Wrapper function for the conjunction introduction rule
+%
+\newcommand{\conjunctionintro}[3]{
+    \introductionRule{#1}{#2}{#3}{\land}
+}
+%
+%  Wrapper function for the disjunction introduction rule
+%
+\newcommand{\disjunctionintro}[3]{
+    \introductionRule{#1}{#2}{#3}{\lor}
+}
+%
+%  Wrapper function for the implication introduction rule
+%
+\newcommand{\implicationintro}[3]{
+    \introductionRule{#1}{#2}{#3}{\rightarrow}
+}
+%
+%  Wrapper function for the negation introduction rule
+%
+\newcommand{\negationintro}[3]{
+    \introductionRule{#1}{#2}{#3}{\neg}
+}
+%
+%  Wrapper function for the double negation introduction rule
+%
+\newcommand{\doublenegationintro}[3]{
+    \introductionRule{#1}{#2}{#3}{\neg\neg}
+}
+%
+%  Wrapper function for the conjunction elimination rule
+%
+\newcommand{\conjunctionelim}[3]{
+    \eliminationRule{#1}{#2}{#3}{\land}
+}
+%
+%  Wrapper function for the disjunction elimination rule
+%
+\newcommand{\disjunctionelim}[3]{
+    \eliminationRule{#1}{#2}{#3}{\lor}
+}
+%
+%  Wrapper function for the implication elimination rule
+%
+\newcommand{\implicationelim}[3]{
+    \eliminationRule{#1}{#2}{#3}{\rightarrow}
+}
+%
+%  Wrapper function for the negation elimination rule
+%
+\newcommand{\negationelim}[3]{
+    \eliminationRule{#1}{#2}{#3}{\neg}
+}
+%
+%  Wrapper function for the double negation elimination rule
+%
+\newcommand{\doublenegationelim}[3]{
+    \eliminationRule{#1}{#2}{#3}{\neg\neg}
+}
+
+%
+%  Counter to automatically track lines in the enviroment
+%
+\newcounter{linectr}
+\NewEnviron{linearproof}{%
+\setcounter{linectr}{0}%
+\begin{align*}
+    \BODY
+\end{align*}
+}
+
+%
+%  Function to update line number and display it
+%
+\newcommand*\incLineCtrAndShow{%
+    \refstepcounter{linectr}%
+    \arabic{linectr}%
+}
