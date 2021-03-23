@@ -146,6 +146,7 @@ A *judgement* is a list of propositions called the *antecedents* followed by a s
 You can easily define your own rules using the base functions:
 - `baseRuleWithNoPremises`
 - `baseRuleWithPremises`
+
 Where if you have assumptions that have no premises (similar to the axiom) rule use `baseRuleWithNoPremises` and `baseRuleWithPremises` otherwise. However, if your functions are simply introduction or elimination rules which involve some premises, consider using the following for the appropriate usage:
 - `introductionRule`
 - `eliminationRule`
